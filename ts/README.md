@@ -13,3 +13,4 @@ First things to check:
 
 - lock versions on `package.json`
 - remove `index.test.ts`
+- `git init`

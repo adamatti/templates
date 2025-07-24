@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+---
+version: "3"
+
+vars:
+  DOCKER_TAG: app:local
+
+tasks:
+  default:
+    desc: Show help
+    aliases: [h]
+    silent: true
+    cmds:
+      - task -l --sort alphanumeric
+
+  clean:
+    cmds:
+      - rm -f app
+      - rm -rf vendor
+
+  install:
+    desc: install dependencies
+    aliases: [i]
+    sources:
+      - go.mod
+      - go.sum
+    cmds:
+      - go mod tidy
+      - go mod download
+
+  run:
+    desc: run
+    aliases: [r]
+    cmds:
+      - task: install
+      - go run main.go
+
+  test:
+    desc: run tests
+    aliases: [t]
+    cmds:
+      - task: install
+      - go test
+
+  format:
+    aliases: [fmt]
+    sources:
+      - "**/*.go"
+    cmds:
+      - go fmt
+
+  lint:
+    desc: lint
+    aliases: [l]
+    cmds:
+      - task: install
+      - task: format
+      - golangci-lint run ./...
+
+  build:
+    desc: Build
+    cmds:
+      - task: install
+      - go build -v -o app
+
+  docker:build:
+    desc: build docker image
+    cmds:
+      - docker build --quiet . -t {{.DOCKER_TAG}}
+
+  docker:sh:
+    desc: enter docker image
+    cmds:
+      - task: docker:build
+      - >-
+        docker run -it --rm 
+        -p 8080:8080
+        -w /app
+        --entrypoint /bin/sh
+        {{.DOCKER_TAG}}
+
+  docker:run:
+    desc: run docker image
+    aliases: [dr]
+    cmds:
+      - task: docker:build
+      - >-
+        docker run -it --rm 
+        -p 8080:8080
+        -w /app
+        {{.DOCKER_TAG}}
