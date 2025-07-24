@@ -5,6 +5,7 @@ out/
 node_modules/
 
 !Taskfile.yaml
+!Makefile
 yarn.lock
 pnpm-lock.yaml
 pnpm-workspace.yaml
