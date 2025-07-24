@@ -1,0 +1,6 @@
+{
+	"extends": "@total-typescript/tsconfig/tsc/dom/app",
+	"compilerOptions": {
+		"noEmit": true
+	}
+}

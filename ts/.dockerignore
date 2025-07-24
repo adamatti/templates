@@ -1,0 +1,10 @@
+.task/
+node_modules/
+.gitignore
+biome.json
+Dockerfile
+.dockerignore
+mise.toml
+Taskfile
+vitest.config.ts
+*.test.ts

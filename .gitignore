@@ -1,1 +1,13 @@
+.task/
+coverage/
+dist/
+out/
 node_modules/
+
+!Taskfile.yaml
+yarn.lock
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+# Personal
+TODO.md

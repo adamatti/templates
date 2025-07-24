@@ -1,0 +1,14 @@
+{
+	"type": "module",
+	"scripts": {
+		"vitest": "vitest",
+		"test": "vitest --run"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@total-typescript/tsconfig": "*",
+		"@types/node": "*",
+		"typescript": "*",
+		"vitest": "*"
+	}
+}
