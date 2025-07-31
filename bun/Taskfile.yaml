@@ -49,3 +49,10 @@ tasks:
     cmds:
       - task: install
       - bun --hot src/index.tsx
+
+  lint:
+    desc: Lint
+    aliases: [l]
+    cmds:
+      - task: install
+      - nlx @biomejs/biome check --write ./

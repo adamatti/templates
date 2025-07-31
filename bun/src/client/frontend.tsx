@@ -5,16 +5,17 @@
  * It is included in `src/index.html`.
  */
 
-import { createRoot } from "react-dom/client";
-import { App } from "./App";
+import { createRoot } from 'react-dom/client';
+import { App } from './app';
 
 function start() {
-  const root = createRoot(document.getElementById("root")!);
+  // biome-ignore lint: bun template
+  const root = createRoot(document.getElementById('root')!);
   root.render(<App />);
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", start);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', start);
 } else {
   start();
 }

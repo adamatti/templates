@@ -9,6 +9,8 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "@types/react-dom": "^19",
+    "@biomejs/biome": "2.1.2",
+    "ultracite": "5.0.49"
   }
 }
