@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+---
+version: "3"
+
+dotenv: [".env"]
+
+tasks:
+  default:
+    desc: Show help
+    aliases: [h]
+    silent: true
+    cmds:
+      - task -l --sort alphanumeric
+
+  install:
+    desc: install
+    aliases: [i]
+    run: once
+    sources:
+      - package.json
+      - bun.lock
+    cmds:
+      - ni
+
+  test:
+    desc: test
+    aliases: [t]
+    cmds:
+      - task: install
+      - bun --silent test
+
+  test:int:
+    desc: integration test
+    aliases: [ti]
+    cmds:
+      - task: install
+      - bun test ./src/**/*.int.test.ts
+
+  run:
+    desc: run
+    aliases: [r]
+    cmds:
+      - task: install
+      - NODE_ENV=production bun src/index.tsx
+
+  dev:
+    desc: run in dev mode
+    aliases: [watch, w]
+    cmds:
+      - task: install
+      - bun --hot src/index.tsx
