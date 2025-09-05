@@ -1,0 +1,17 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
+  "extends": ["ultracite"],
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noConsole": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off"
+      }
+    }
+  },
+  "files": {
+    "includes": ["**/*", "!biome.jsonc", "!tsconfig.*.json", "!**/*.css"]
+  }
+}

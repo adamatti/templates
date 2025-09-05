@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+---
+version: "3"
+
+tasks:
+  default:
+    desc: Show help
+    aliases: [h]
+    silent: true
+    cmds:
+      - task -l --sort alphanumeric
+
+  clean-hard:
+    desc: Clean hard
+    cmds:
+      - rm -rf node_modules
+
+  install:
+    desc: install
+    aliases: [i]
+    run: once
+    sources:
+      - package.json
+      - pnpm-lock.yaml
+      - pnpm-workspace.yaml
+    cmds:
+      - pnpm install
+
+  dev:
+    desc: dev
+    aliases: [run, r]
+    cmds:
+      - task: install
+      - pnpm run dev
+
+  lint:
+    desc: Lint
+    aliases: [l]
+    cmds:
+      - task: install
+      - nlx @biomejs/biome check --write ./
