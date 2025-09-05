@@ -12,6 +12,6 @@
     }
   },
   "files": {
-    "includes": ["**/*", "!biome.jsonc", "!tsconfig.*.json"]
+    "includes": ["**/*", "!biome.jsonc", "!tsconfig.*.json", "!**/*.css"]
   }
 }
