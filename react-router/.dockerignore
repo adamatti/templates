@@ -1,0 +1,12 @@
+.react-router
+.task
+build
+node_modules
+
+.gitignore
+Dockerfile
+.dockerignore
+mise.toml
+Taskfile.yaml
+
+*.md
