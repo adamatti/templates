@@ -12,6 +12,6 @@ export default defineConfig({
   },
   server: {
     // biome-ignore lint: check it later
-    port: process.env.PORT ?? 3000,
+    port: process.env.PORT ? Number.parseInt(process.env.PORT) : 3000,
   },
 });

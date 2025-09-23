@@ -49,3 +49,16 @@ tasks:
     cmds:
       - task: install
       - pnpm --silent run lint
+
+  check:
+    desc: run checks
+    cmds:
+      - task: lint
+      # task: test
+
+  build:
+    desc: build
+    cmds:
+      - task: clean # optional
+      - task: check
+      - pnpm --silent run build
