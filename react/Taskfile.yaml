@@ -52,11 +52,17 @@ tasks:
       - task: install
       - pnpm --silent run lint
 
+  test:
+    desc: run tests
+    cmds:
+      - task: install
+      - pnpm --silent run test
+
   check:
     desc: run checks
     cmds:
       - task: lint
-      # task: test
+      - task: test
 
   build:
     desc: build
