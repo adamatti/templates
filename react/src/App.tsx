@@ -1,3 +1,4 @@
+import "./app.css";
 import MainPage from "./pages/main.page";
 
 function App() {
