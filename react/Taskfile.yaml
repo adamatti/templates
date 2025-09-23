@@ -3,6 +3,8 @@
 version: "3"
 
 dotenv: [.env]
+vars:
+  DOCKER_TAG: app:local
 
 tasks:
   default:
@@ -62,3 +64,20 @@ tasks:
       - task: clean # optional
       - task: check
       - pnpm --silent run build
+
+  docker:build:
+    desc: Docker build
+    cmds:
+      - docker build . -t {{ .DOCKER_TAG }}
+
+  docker:sh:
+    desc: SH docker image
+    cmds:
+      - task: docker:build
+      - docker run -it --rm --entrypoint /bin/sh -w /usr/share/nginx/html/ {{ .DOCKER_TAG }}
+  
+  docker:run:
+    desc: Run docker image
+    cmds:
+      - task: docker:build
+      - docker run -it --rm -p 3000:80 {{ .DOCKER_TAG }}
