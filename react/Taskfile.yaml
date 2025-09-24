@@ -59,11 +59,20 @@ tasks:
     cmds:
       - task: install
       - pnpm --silent run test
+  
+  type-check:
+    desc: type-check
+    aliases: [tc]
+    ignore_error: true
+    cmds:
+      - task: install
+      - pnpm exec tsc  --noEmit --project ./tsconfig.json
 
   check:
     desc: run checks
     cmds:
       - task: lint
+      - task: type-check
       - task: test
 
   build:
