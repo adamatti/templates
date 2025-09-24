@@ -7,4 +7,5 @@ COPY ./ /app/
 
 EXPOSE 3000
 
-CMD ["node", "src/index.ts"]
+# CMD ["node", "src/index.ts"]
+CMD ["pnpm", "dlx", "esno", "src/index.ts"]

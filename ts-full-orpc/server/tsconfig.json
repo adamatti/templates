@@ -1,7 +1,15 @@
 {
-  "extends": "@total-typescript/tsconfig/tsc/dom/app",
+  "extends": "@total-typescript/tsconfig/bundler/no-dom/app",
   "compilerOptions": {
     "noEmit": true,
     "strictNullChecks": true
-  }
+  },
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "vitest.config.ts",
+    "vitest.setup.ts"
+  ]
 }
