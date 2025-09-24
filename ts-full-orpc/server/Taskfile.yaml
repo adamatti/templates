@@ -54,7 +54,8 @@ tasks:
     desc: Lint
     aliases: [l]
     cmds:
-      - nlx @biomejs/biome check --write ./
+      - task: install
+      - pnpm --silent exec biome check --write ./
 
   test:
     desc: Test

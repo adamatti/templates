@@ -1,0 +1,6 @@
+.task/
+dist/
+node_modules/
+.env
+*.log
+storybook-static

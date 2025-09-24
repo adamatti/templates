@@ -2,6 +2,20 @@
 ---
 version: "3"
 
+dotenv: [.env]
+
+includes:
+  client:
+    taskfile: client/Taskfile.yaml
+    dir: client
+    # internal: true # optional preference
+    flatten: false
+  server:
+    taskfile: server/Taskfile.yaml
+    dir: server
+    flatten: false
+    # internal: true  # optional preference
+
 tasks:
   default:
     desc: Show help
@@ -14,18 +28,24 @@ tasks:
     desc: Clean
     silent: true
     cmds:
-      - rm -rf client/.task
-      - rm -rf client/dist
-      - rm -rf server/.task
-      - rm -rf server/dist
+      - rm -rf .task
+      - task: client:clean
+      - task: server:clean
 
   clean-hard:
     desc: Clean hard
     silent: true
     cmds:
-      - task: clean
-      - rm -rf client/node_modules
-      - rm -rf server/node_modules
+      - task: clean      
+      - task: client:clean-hard
+      - task: server:clean-hard
+
+  lint:
+    desc: Lint
+    aliases: [l]
+    cmds:
+      - task: client:lint
+      - task: server:lint
 
   docker:up:
     desc: Up docker compose
