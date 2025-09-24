@@ -3,5 +3,8 @@
   "extends": ["ultracite"],
   "linter": {
     "rules": {}
+  },
+  "files": {
+    "includes": ["**/*", "!**/*.css"]
   }
 }

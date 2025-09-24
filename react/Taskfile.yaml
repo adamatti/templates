@@ -41,6 +41,7 @@ tasks:
 
   dev:
     desc: run as dev
+    aliases: [r, run]
     cmds:
       - task: install
       - pnpm --silent run dev
@@ -54,6 +55,7 @@ tasks:
 
   test:
     desc: run tests
+    aliases: [t]
     cmds:
       - task: install
       - pnpm --silent run test
