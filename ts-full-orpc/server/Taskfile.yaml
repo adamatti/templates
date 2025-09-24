@@ -85,6 +85,8 @@ tasks:
 
   docker:sh:
     desc: enter on docker image
+    aliases: [dsh, sh]
+    interactive: true
     cmds:
       - task: docker:build
       - >-
@@ -94,9 +96,10 @@ tasks:
 
   docker:run:
     desc: run docker image
+    interactive: true
     aliases: [dr]
     cmds:
       - task: docker:build
       - >-
-        docker run -it --rm -w /app -p 8080:8080
+        docker run -it --rm -w /app -p 8080:3000
         {{.DOCKER_TAG}}

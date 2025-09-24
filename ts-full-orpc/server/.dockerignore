@@ -1,0 +1,8 @@
+.git/
+.task/
+node_modules/
+Taskfile.yaml
+.dockerignore
+Dockerfile
+biome.jsonc
+*.md

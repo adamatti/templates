@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+---
+version: "3"
+
+tasks:
+  default:
+    desc: Show help
+    aliases: [h]
+    silent: true
+    cmds:
+      - task -l --sort alphanumeric
+
+  clean:
+    desc: Clean
+    silent: true
+    cmds:
+      - rm -rf client/.task
+      - rm -rf client/dist
+      - rm -rf server/.task
+      - rm -rf server/dist
+
+  clean-hard:
+    desc: Clean hard
+    silent: true
+    cmds:
+      - task: clean
+      - rm -rf client/node_modules
+      - rm -rf server/node_modules
+
+  docker:up:
+    desc: Up docker compose
+    aliases: [start, run, r, up]
+    cmds:
+      - docker compose up
+
+  docker:down:
+    desc: Down docker compose
+    aliases: [stop]
+    cmds:
+      - docker compose down
