@@ -1,0 +1,12 @@
+# Biome requires a .gitignore here
+
+.task/
+dist/
+node_modules/
+out/
+coverage/
+
+*.log
+*.env
+
+

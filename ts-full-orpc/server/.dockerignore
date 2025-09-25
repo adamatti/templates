@@ -1,0 +1,14 @@
+.git/
+.task/
+node_modules/
+scripts/
+
+Taskfile.yaml
+.gitignore
+.dockerignore
+Dockerfile
+biome.jsonc
+vitest.config.ts
+vitest.setup.ts
+
+*.md

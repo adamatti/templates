@@ -29,11 +29,13 @@ tasks:
     desc: clean
     silent: true
     cmds:
+      - rm -rf .task
       - rm -rf dist
       - rm -rf coverage
 
   clean-hard:
     desc: clean hard
+    silent: true
     cmds:
       - task: clean
       - rm -rf node_modules/
@@ -41,20 +43,24 @@ tasks:
   run:
     desc: run
     aliases: [r]
+    interactive: true
     cmds:
-      - nlx esno src/index.ts
+      - task: install
+      - pnpm dlx esno src/main.ts
+      # - node src/index.ts
 
   watch:
     desc: run (watch mode)
     aliases: [w]
     cmds:
-      - nlx esno --watch src/index.ts
+      - nlx esno --watch src/main.ts
 
   lint:
     desc: Lint
     aliases: [l]
     cmds:
-      - nlx @biomejs/biome check --write ./
+      - task: install
+      - pnpm --silent exec biome check --write ./
 
   test:
     desc: Test
@@ -68,7 +74,7 @@ tasks:
     ignore_error: true
     cmds:
       - task: install
-      - pnpm exec tsc  --noEmit --project ./tsconfig.json
+      - pnpm exec tsc --noEmit --project ./tsconfig.json
 
   check:
     desc: Run checks
@@ -85,6 +91,8 @@ tasks:
 
   docker:sh:
     desc: enter on docker image
+    aliases: [dsh, sh]
+    interactive: true
     cmds:
       - task: docker:build
       - >-
@@ -94,9 +102,29 @@ tasks:
 
   docker:run:
     desc: run docker image
+    interactive: true
     aliases: [dr]
     cmds:
       - task: docker:build
       - >-
-        docker run -it --rm -w /app -p 8080:8080
+        docker run -it --rm -w /app -p 3001:3000
         {{.DOCKER_TAG}}
+
+  contract:export:
+    desc: export contract
+    aliases: [export, e]
+    sources:
+      - src/**/*
+    status:
+      - test -f dist/contract.json
+      - test -d dist/types
+    cmds:
+      - task: install
+      - rm -f dist/contract.json
+      - rm -f dist/router.js
+      - rm -f dist/router.js.map
+      - rm -rf dist/types
+      - mkdir -p dist/types
+      - pnpm exec tsx scripts/export-contract.ts
+      - pnpm exec tsc --project ./tsconfig.json
+      
