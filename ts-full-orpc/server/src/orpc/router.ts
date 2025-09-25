@@ -1,17 +1,7 @@
 import { os } from '@orpc/server';
 import { z } from 'zod';
 import logger from '../logger';
-
-const tableTodos = [
-  {
-    id: 1,
-    title: 'Todo 1',
-  },
-  {
-    id: 2,
-    title: 'Todo 2',
-  },
-];
+import { TodoService } from '../service';
 
 const list = os
   .route({
@@ -37,9 +27,9 @@ const list = os
       })
     )
   )
-  .handler(({ input }) => {
+  .handler(async ({ input }) => {
     logger.debug('todo.list called', { input });
-    return tableTodos;
+    return await TodoService.list();
   });
 
 const create = os
@@ -57,12 +47,8 @@ const create = os
       title: z.string(),
     })
   )
-  .handler(({ input }) => {
-    const todo = {
-      id: tableTodos.length + 1,
-      title: input.title,
-    };
-    tableTodos.push(todo);
+  .handler(async ({ input }) => {
+    const todo = await TodoService.create(input.title);
     return {
       todo,
     };

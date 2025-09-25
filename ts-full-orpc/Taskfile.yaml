@@ -47,10 +47,18 @@ tasks:
       - task: client:lint
       - task: server:lint
 
+  docker:build:
+    desc: Build docker compose
+    aliases: [build]
+    cmds:
+      - task: client:setup
+      - docker compose build
+
   docker:up:
     desc: Up docker compose
     aliases: [start, run, r, up]
     cmds:
+      - task: docker:build
       - docker compose up
 
   docker:down:

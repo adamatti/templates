@@ -1,12 +1,22 @@
 import cors from 'cors';
 import type { NextFunction, Request, Response } from 'express';
 import express from 'express';
+import config from './config';
 import logger from './logger';
 import { openApiHandler, rpcHandler } from './orpc/http-handler';
 
 export const app = express();
 
-app.use(cors());
+if (config.cors) {
+  app.use(
+    cors({
+      origin: config.cors.origin,
+      methods: config.cors.methods,
+      allowedHeaders: config.cors.headers,
+      credentials: config.cors.credentials,
+    })
+  );
+}
 
 // log middleware
 app.use((req: Request, _res: Response, next: NextFunction) => {

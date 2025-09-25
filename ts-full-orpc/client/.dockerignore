@@ -10,3 +10,7 @@ biome.jsonc
 Dockerfile
 Taskfile.yaml
 *.md
+vitest.config.ts
+vitest.setup.ts
+
+!server/

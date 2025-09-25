@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes as ReactRoutes, Route } from "react-router-dom";
-import AboutPage from "./pages/about.page";
 import MainPage from "./pages/main.page";
+import TodoPage from "./pages/todo.page";
 import "./app.css";
 
 export default function Routes() {
@@ -8,7 +8,7 @@ export default function Routes() {
     <BrowserRouter>
       <ReactRoutes>
         <Route element={<MainPage />} path="/" />
-        <Route element={<AboutPage />} path="/about" />
+        <Route element={<TodoPage />} path="/todo" />
       </ReactRoutes>
     </BrowserRouter>
   );

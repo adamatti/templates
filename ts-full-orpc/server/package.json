@@ -3,7 +3,7 @@
   "scripts": {
     "vitest": "vitest",
     "test": "vitest --run"
-  },  
+  },
   "dependencies": {
     "@orpc/json-schema": "^1.9.0",
     "@orpc/openapi": "^1.9.0",

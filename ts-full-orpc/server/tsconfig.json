@@ -1,7 +1,10 @@
 {
   "extends": "@total-typescript/tsconfig/bundler/no-dom/app",
   "compilerOptions": {
-    "noEmit": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "outDir": "dist/types",
     "strictNullChecks": true
   },
   "include": ["src"],

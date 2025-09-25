@@ -46,14 +46,14 @@ tasks:
     interactive: true
     cmds:
       - task: install
-      - pnpm dlx esno src/index.ts
+      - pnpm dlx esno src/main.ts
       # - node src/index.ts
 
   watch:
     desc: run (watch mode)
     aliases: [w]
     cmds:
-      - nlx esno --watch src/index.ts
+      - nlx esno --watch src/main.ts
 
   lint:
     desc: Lint
@@ -74,7 +74,7 @@ tasks:
     ignore_error: true
     cmds:
       - task: install
-      - pnpm exec tsc  --noEmit --project ./tsconfig.json
+      - pnpm exec tsc --noEmit --project ./tsconfig.json
 
   check:
     desc: Run checks
@@ -107,5 +107,24 @@ tasks:
     cmds:
       - task: docker:build
       - >-
-        docker run -it --rm -w /app -p 3000:3000
+        docker run -it --rm -w /app -p 3001:3000
         {{.DOCKER_TAG}}
+
+  contract:export:
+    desc: export contract
+    aliases: [export, e]
+    sources:
+      - src/**/*
+    status:
+      - test -f dist/contract.json
+      - test -d dist/types
+    cmds:
+      - task: install
+      - rm -f dist/contract.json
+      - rm -f dist/router.js
+      - rm -f dist/router.js.map
+      - rm -rf dist/types
+      - mkdir -p dist/types
+      - pnpm exec tsx scripts/export-contract.ts
+      - pnpm exec tsc --project ./tsconfig.json
+      

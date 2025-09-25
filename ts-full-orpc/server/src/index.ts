@@ -1,18 +1,4 @@
-import { app } from './app';
-import logger from './logger';
+// Add exports to frontend here
 
-process.on('uncaughtException', (error: Error) => {
-  logger.error('Uncaught exception', { error });
-});
-
-process.on(
-  'unhandledRejection',
-  (reason: unknown, promise: Promise<unknown>) => {
-    logger.error('Unhandled promise rejection', { reason, promise });
-  }
-);
-
-const PORT = Number(process.env.PORT ?? 3000);
-app.listen(PORT, () => {
-  logger.info('Server is running', { port: PORT });
-});
+export type { Todo } from './service/types';
+export type { default as router } from './orpc/router';

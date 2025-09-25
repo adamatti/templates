@@ -22,7 +22,7 @@ tasks:
       - pnpm-lock.yaml
       - pnpm-workspace.yaml
     cmds:
-      - pnpm install
+      - pnpm install --frozen-lockfile
       - pnpm approve-builds
 
   clean:
@@ -32,6 +32,8 @@ tasks:
       - rm -rf .task
       - rm -rf dist
       - rm -rf coverage
+      - rm -rf server/types
+      - rm -f server/contract.json
 
   clean-hard:
     desc: clean hard
@@ -44,21 +46,21 @@ tasks:
     desc: run as dev
     aliases: [r, run]
     cmds:
-      - task: install
+      - task: setup
       - pnpm --silent run dev
 
   lint:
     desc: lint
     aliases: [l]
     cmds:
-      - task: install
+      - task: setup
       - pnpm --silent run lint
 
   test:
     desc: run tests
     aliases: [t]
     cmds:
-      - task: install
+      - task: setup
       - pnpm --silent run test
   
   type-check:
@@ -66,12 +68,13 @@ tasks:
     aliases: [tc]
     ignore_error: true
     cmds:
-      - task: install
+      - task: setup
       - pnpm exec tsc  --noEmit --project ./tsconfig.json
 
   check:
     desc: run checks
     cmds:
+      - task: setup
       - task: lint
       - task: type-check
       - task: test
@@ -80,13 +83,15 @@ tasks:
     desc: build
     cmds:
       - task: clean # optional
-      - task: check
+      - task: setup
+      - task: check      
       - pnpm --silent run build
 
   docker:build:
     desc: Docker build
     aliases: [db]
     cmds:
+      - task: setup
       - docker build . -t {{ .DOCKER_TAG }}
 
   docker:sh:
@@ -102,3 +107,15 @@ tasks:
     cmds:
       - task: docker:build
       - docker run -it --rm -p 3000:80 {{ .DOCKER_TAG }}
+
+  setup:
+    desc: Copy client from server
+    run: once
+    deps: [install]
+    sources:
+      - ../server/dist/contract.json
+      - ../server/dist/types/**/*
+    cmds:
+      - cd ../server && task contract:export
+      - rm -rf server/types && mkdir -p server/types && cp -r ../server/dist/types/* ./server/types/
+      - rm -f server/contract.json && cp ../server/dist/contract.json ./server/contract.json

@@ -6,6 +6,7 @@ import { RPCHandler } from '@orpc/server/node';
 import { CORSPlugin } from '@orpc/server/plugins';
 import { ZodToJsonSchemaConverter } from '@orpc/zod/zod4';
 import type { NextFunction, Request, Response } from 'express';
+import config from '../config';
 import logger from '../logger';
 import router from './router';
 
@@ -53,7 +54,16 @@ export const rpcHandler = handlerWrapper('/rpc', rpcHandlerObject);
 // OpenApi
 const openApiHandlerObject = new OpenAPIHandler(router, {
   plugins: [
-    new CORSPlugin(),
+    ...(config.cors
+      ? [
+          new CORSPlugin({
+            origin: config.cors.origin,
+            allowMethods: config.cors.methods,
+            allowHeaders: config.cors.headers,
+            credentials: config.cors.credentials,
+          }),
+        ]
+      : []),
     new SmartCoercionPlugin({
       schemaConverters: [
         new ZodToJsonSchemaConverter(),

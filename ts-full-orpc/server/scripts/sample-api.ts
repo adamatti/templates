@@ -5,7 +5,7 @@ import { OpenAPILink } from '@orpc/openapi-client/fetch';
 import router from '../src/orpc/router';
 
 const link = new OpenAPILink(router, {
-  url: 'http://localhost:3000/api',
+  url: 'http://localhost:3001/api',
   // headers: { Authorization: 'Bearer token' },
   fetch: (request, init) => {
     return globalThis.fetch(request, {
