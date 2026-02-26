@@ -22,6 +22,7 @@ tasks:
       - pnpm-lock.yaml
     cmds:
       - ni
+      - pnpm approve-builds
 
   clean:
     desc: clean
