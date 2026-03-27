@@ -20,6 +20,7 @@ tasks:
     sources:
       - package.json
       - pnpm-lock.yaml
+      - pnpm-workspace.yaml
     cmds:
       - ni
       - pnpm approve-builds
@@ -78,6 +79,7 @@ tasks:
 
   docker:build:
     desc: build docker image
+    aliases: [db]
     cmds:
       - docker build --quiet . -t {{.DOCKER_TAG}}
 

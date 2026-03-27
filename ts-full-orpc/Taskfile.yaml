@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+---
+version: "3"
+
+dotenv: [.env]
+
+includes:
+  client:
+    taskfile: client/Taskfile.yaml
+    dir: client
+    # internal: true # optional preference
+    flatten: false
+  server:
+    taskfile: server/Taskfile.yaml
+    dir: server
+    flatten: false
+    # internal: true  # optional preference
+
+tasks:
+  default:
+    desc: Show help
+    aliases: [h]
+    silent: true
+    cmds:
+      - task -l --sort alphanumeric
+
+  clean:
+    desc: Clean
+    silent: true
+    cmds:
+      - rm -rf .task
+      - task: client:clean
+      - task: server:clean
+
+  clean-hard:
+    desc: Clean hard
+    silent: true
+    cmds:
+      - task: clean      
+      - task: client:clean-hard
+      - task: server:clean-hard
+
+  lint:
+    desc: Lint
+    aliases: [l]
+    cmds:
+      - task: client:lint
+      - task: server:lint
+
+  docker:build:
+    desc: Build docker compose
+    aliases: [build]
+    cmds:
+      - task: client:setup
+      - docker compose build
+
+  docker:up:
+    desc: Up docker compose
+    aliases: [start, run, r, up]
+    cmds:
+      - task: docker:build
+      - docker compose up
+
+  docker:down:
+    desc: Down docker compose
+    aliases: [stop]
+    cmds:
+      - docker compose down

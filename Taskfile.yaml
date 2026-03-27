@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+---
+version: "3"
+
+tasks:
+  default:
+    desc: Show help
+    aliases: [h]
+    silent: true
+    cmds:
+      - task -l --sort alphanumeric
+
+  clean:
+    desc: Clean
+    silent: true
+    cmds:
+      - cd ts && task clean-hard
+      - cd react && task clean-hard
+      - cd ts-full-orpc && task clean-hard
