@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+---
+version: "3"
+
+tasks:
+  clean:
+    desc: clean
+    cmds:
+      - rm -rf .next
+      - rm -rf .task
+
+  install:
+    desc: install
+    aliases: [i]
+    run: once
+    sources:
+      - package.json
+      - pnpm-lock.yaml
+    cmds:
+      - pnpm install
+      - pnpm approve-builds
+
+  run:
+    desc: run dev server
+    aliases: [r, dev]
+    cmds:
+      - task: install
+      - task: docker:up
+      - task: drizzle:push
+      - pnpm --silent run dev
+
+  lint:
+    desc: Lint
+    aliases: [l]
+    cmds:
+      - pnpm exec biome check --write ./
+
+  docker:up:
+    desc: start dependencies
+    aliases: [up, deps]
+    cmds:
+      - docker-compose up -d
+
+  docker:stop:
+    desc: stop dependencies
+    aliases: [down, stop]
+    cmds:
+      - docker-compose stop -t 0
+
+  drizzle:push:
+    desc: push schema to database
+    cmds:
+      - task: install
+      - pnpm exec drizzle-kit push
+
+  typecheck:
+    desc: typecheck
+    aliases: [tc]
+    cmds:
+      - task: install
+      - pnpm exec tsc --noEmit
+
+  checks:
+    desc: run all checks
+    aliases: [c]
+    cmds:
+      - task: install
+      - task: lint
+      - task: typecheck
+
+  test-only:
+    desc: run tests
+    aliases: [to]
+    cmds:
+      - task: install
+      - pnpm --silent exec vitest run
+
+  tests:
+    desc: run tests
+    aliases: [t]
+    cmds:
+      - task: install
+      - task: docker:up
+      - task: drizzle:push 
+      - task: test-only
