@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+---
+version: "3"
+
+tasks:
+  default:
+    desc: Show help
+    aliases: [h]
+    silent: true
+    cmds:
+      - task -l --sort alphanumeric
+
+  clean:
+    desc: Clean the project
+    cmds:
+      - rm -rf build
+      - rm -rf .react-router
+
+  clean-hard:
+    desc: Clean the project hard
+    cmds:
+      - task: clean
+      - rm -rf node_modules
+      - rm -rf .task
+
+  install:
+    desc: Install dependencies
+    aliases: [i]
+    silent: true
+    sources:
+      - package.json
+      - pnpm-lock.json
+      - pnpm-workspace.yaml
+    cmds:
+      - pnpm install
+
+  dev:
+    desc: Start the development server
+    aliases: [d, run, r]
+    cmds:
+      - task: install
+      - pnpm --silent run dev
+
+  type-check:
+    desc: Type check the project
+    aliases: [tc]
+    cmds:
+      - task: install
+      - pnpm --silent run type-check
+
+  build:
+    desc: Build the project
+    aliases: [b]
+    cmds:
+      - task: install
+      - pnpm --silent run build
